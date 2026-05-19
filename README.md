@@ -16,6 +16,8 @@
   <img src="assets/demo.gif" alt="yt-to-knowledge demo" width="700" />
 </p>
 
+> **5 videos from 3Blue1Brown → 11 interconnected wiki articles in 5 minutes. Zero cost.**
+
 ## What it does
 
 ```
@@ -47,6 +49,49 @@ python -m src --query "eigenvalues in PageRank" --output ./3b1b-vault
 ```
 
 Then open the output folder in Obsidian. You'll see a graph of interconnected articles compiled from the channel's content.
+
+## Demo: 3Blue1Brown → Knowledge Base
+
+```
+$ python -m src --channel @3blue1brown --output ./3b1b-vault --max-videos 5
+
+Listing videos from channel...
+Found 5 videos. Fetching transcripts...
+  [1/5] How (and why) to take a logarithm of an image... ok
+  [2/5] The most beautiful formula not enough people understand... ok
+  [3/5] The Hairy Ball Theorem... ok
+  [4/5] Why Laplace transforms are so useful... ok
+  [5/5] But what is a Laplace Transform?... ok
+
+Chunking 5 transcripts...
+Created 61 chunks from 5 transcripts.
+
+Compiling wiki articles with Gemini...
+Identifying key topics across the channel...
+Identified 11 topics.
+  Compiling article [1/11]: Hairy Ball Theorem...
+  Compiling article [2/11]: Laplace Transforms...
+  ...
+  Compiling article [11/11]: Droste Effect & Fractals...
+
+Vault complete: 11 articles + index + sources
+Done in 5m 23s.
+```
+
+**Generated index (`_index.md`):**
+
+```markdown
+- [[Complex Exponential/Logarithm]] `Complex Numbers`, `Exponential Functions`
+- [[Complex Poles & Singularities]] `Complex Analysis`, `S-plane`
+- [[Conformal Mapping]] `Complex Analysis`, `Geometry`
+- [[Differential Equations]] `Calculus`, `Modeling`, `Physics`
+- [[Hairy Ball Theorem]] `Topology`, `Vector Fields`, `Sphere`
+- [[Laplace Transforms]] `Differential Equations`, `Signal Processing`
+- [[Probability & Simulations]] `Probability`, `Monte Carlo`
+... (11 articles total)
+```
+
+Each article synthesizes content from multiple videos, includes `[[backlinks]]` to related topics, and links back to the source YouTube videos.
 
 ## How it works
 
