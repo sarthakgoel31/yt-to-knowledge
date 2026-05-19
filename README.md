@@ -12,6 +12,10 @@
 
 ---
 
+<p align="center">
+  <img src="assets/demo.gif" alt="yt-to-knowledge demo" width="700" />
+</p>
+
 ## What it does
 
 ```
@@ -90,7 +94,17 @@ src/
 └── search.py     # FAISS semantic search over chunks (optional)
 ```
 
-## Why this over raw transcript search?
+## Why this over alternatives?
+
+| | yt-to-knowledge | Typical RAG scrapers | NotebookLM |
+|---|---|---|---|
+| Output | Obsidian wiki with `[[backlinks]]` | Raw transcript chunks | Podcast / chat |
+| Synthesizes across videos | Yes (Gemini compiles topics) | No (just indexes) | Partial |
+| Semantic search | Yes (`--search` flag) | Yes | No export |
+| Obsidian graph view | Yes | No | No |
+| Cost | Free (Gemini free tier) | Free | Free (limited) |
+| Self-hosted | Yes | Yes | No |
+| Works offline after build | Yes | Yes | No |
 
 Most YouTube-to-RAG tools stop at **indexing chunks** -- you search, you get raw transcript snippets. That's ctrl+F with extra steps.
 
