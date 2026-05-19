@@ -1,3 +1,7 @@
 yt-dlp>=2024.0.0
 google-genai>=1.0.0
 pyyaml>=6.0
+
+# Optional: semantic search (pip install faiss-cpu sentence-transformers)
+# faiss-cpu>=1.7.0
+# sentence-transformers>=2.0.0

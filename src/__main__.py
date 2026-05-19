@@ -16,6 +16,7 @@ from pathlib import Path
 from .chunker import chunk_transcripts
 from .compiler import compile_articles
 from .fetcher import fetch_transcripts
+from .search import build_index, search
 from .vault import write_vault
 
 
@@ -32,10 +33,27 @@ def main():
     parser.add_argument("--output", default="./output", help="Output directory for the vault (default: ./output)")
     parser.add_argument("--max-videos", type=int, default=100, help="Maximum videos to process (default: 100)")
     parser.add_argument("--lang", default="en", help="Subtitle language code (default: en)")
+    parser.add_argument("--search", action="store_true", help="Build FAISS search index over chunks")
+    parser.add_argument("--query", help="Search the index (requires --search to have been run first)")
+    parser.add_argument("--top-k", type=int, default=5, help="Number of search results (default: 5)")
 
     args = parser.parse_args()
 
     output_dir = Path(args.output)
+
+    # Query-only mode: no fetching needed
+    if args.query:
+        results = search(args.query, output_dir, top_k=args.top_k)
+        if not results:
+            sys.exit(1)
+        print(f"\nResults for: \"{args.query}\"\n")
+        for i, r in enumerate(results, 1):
+            print(f"  {i}. [{r['score']:.3f}] {r['video_title']}")
+            print(f"     {r['url']}")
+            print(f"     {r['text'][:200]}...")
+            print()
+        sys.exit(0)
+
     source_name = args.channel or args.playlist
     is_playlist = args.playlist is not None
 
@@ -81,6 +99,11 @@ def main():
     # Step 4: Write vault
     print()
     write_vault(articles, videos, output_dir)
+
+    # Step 5: Build search index (optional)
+    if args.search:
+        print()
+        build_index(chunks, output_dir)
 
     elapsed = time.time() - start
     minutes = int(elapsed // 60)
