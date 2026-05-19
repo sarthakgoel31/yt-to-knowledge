@@ -1,13 +1,14 @@
 """Semantic search over transcript chunks using FAISS + sentence-transformers."""
 
 import json
-import numpy as np
 from pathlib import Path
 
 try:
+    import numpy as np
     import faiss
     from sentence_transformers import SentenceTransformer
 except ImportError:
+    np = None
     faiss = None
     SentenceTransformer = None
 
