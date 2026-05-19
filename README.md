@@ -13,7 +13,7 @@
 ---
 
 <p align="center">
-  <img src="assets/demo.gif" alt="yt-to-knowledge demo" width="700" />
+  <img src="assets/demo.png" alt="Obsidian graph view of a 3Blue1Brown knowledge base" width="700" />
 </p>
 
 > **5 videos from 3Blue1Brown → 11 interconnected wiki articles in 5 minutes. Zero cost.**
